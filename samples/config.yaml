@@ -1,0 +1,12 @@
+output_dir: /output
+clear_output: true
+sqlite_filename: moviememes.sqlite3
+
+movies:
+  sample-movie:
+    title: Sample from mkvtoolnix.download
+    video: ./sample.avi
+    subtitles: ./sample.srt
+    subtitle_attribution_text: Sample subtitle file
+    subtitle_attribution_url: https://mkvtoolnix.download/samples/
+

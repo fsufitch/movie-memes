@@ -1,0 +1,19 @@
+""" Compatibility with, and abstraction from subtitle files """
+import datetime
+from typing import List
+from pysubparser import parser as subparser
+
+from moviememes.preprocessor.structs import Subtitle
+
+
+def parse_subtitles(subtitle_file: str) -> List[Subtitle]:
+    """ Return a list of Subtitle objects derived from the given file """
+    return [
+        Subtitle(s.index, s.text, _to_sec(s.start), _to_sec(s.end))
+        for s in subparser.parse(subtitle_file)
+    ]
+
+
+def _to_sec(time: datetime.time) -> float:
+    """ Convert a datetime.time into a second delta from 00:00:00 """
+    return time.second + 60 * (time.minute + 60 * time.hour) + time.microsecond / 1000000
