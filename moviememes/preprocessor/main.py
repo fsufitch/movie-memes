@@ -10,8 +10,7 @@ import yaml
 from moviememes.db import get_sessionmaker, Movie, Attribution, Snapshot
 from moviememes.preprocessor.processing import create_work_items
 from moviememes.preprocessor.structs import MovieInput, ProcessConfiguration
-from moviememes.preprocessor.ffmpeg_compat import (
-    extract_screenshot_plain, extract_screenshot_subtitled, extract_clip_subtitled, extract_all)
+from moviememes.preprocessor.ffmpeg_compat import extract_all
 
 IMAGE_SUFFIX = '.jpg'
 VIDEO_SUFFIX = '.mp4'

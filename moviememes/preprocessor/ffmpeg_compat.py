@@ -24,7 +24,7 @@ def extract_all(input_file: str, subtitle_file: str, start_time: float, end_time
             cropped_subtitle_file,
         ]
 
-        print(shlex.join(cmd1))
+        # print(shlex.join(cmd1))
         subprocess.check_call(cmd1)
 
         cmd2 = [
@@ -38,7 +38,7 @@ def extract_all(input_file: str, subtitle_file: str, start_time: float, end_time
             '-map', '[sub3]', clip_subtitled_output,
         ]
 
-        print(shlex.join(cmd2))
+        # print(shlex.join(cmd2))
         subprocess.check_call(cmd2)
 
 def _ensure_parent_dir(filename):
