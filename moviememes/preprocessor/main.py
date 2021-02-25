@@ -11,7 +11,7 @@ from moviememes.db import get_sessionmaker, Movie, Attribution, Snapshot
 from moviememes.preprocessor.processing import create_work_items
 from moviememes.preprocessor.structs import MovieInput, ProcessConfiguration
 from moviememes.preprocessor.ffmpeg_compat import (
-    extract_screenshot_plain, extract_screenshot_subtitled, extract_clip_subtitled)
+    extract_screenshot_plain, extract_screenshot_subtitled, extract_clip_subtitled, extract_all)
 
 IMAGE_SUFFIX = '.jpg'
 VIDEO_SUFFIX = '.mp4'
@@ -44,29 +44,39 @@ def main():
             ))
         
         for item in tqdm.tqdm(work_items, desc=movie_input.movie_id):
-            extract_screenshot_plain(
+            # extract_screenshot_plain(
+            #     movie_input.video_file,
+            #     item.middle_timestamp,
+            #     os.path.join(config.output_dir,
+            #                  movie_input.movie_id,
+            #                  item.screenshot_plain),
+            # )
+            # extract_screenshot_subtitled(
+            #     movie_input.video_file,
+            #     item.middle_timestamp,
+            #     os.path.join(config.output_dir,
+            #                  movie_input.movie_id,
+            #                  item.screenshot_subtitle),
+            #     movie_input.sub_file,
+            # )
+            # extract_clip_subtitled(
+            #     movie_input.video_file,
+            #     item.subtitle.start,
+            #     item.duration,
+            #     os.path.join(config.output_dir,
+            #                  movie_input.movie_id,
+            #                  item.clip_subtitle),
+            #     movie_input.sub_file,
+            # )
+
+            extract_all(
                 movie_input.video_file,
-                item.middle_timestamp,
-                os.path.join(config.output_dir,
-                             movie_input.movie_id,
-                             item.screenshot_plain),
-            )
-            extract_screenshot_subtitled(
-                movie_input.video_file,
-                item.middle_timestamp,
-                os.path.join(config.output_dir,
-                             movie_input.movie_id,
-                             item.screenshot_subtitle),
                 movie_input.sub_file,
-            )
-            extract_clip_subtitled(
-                movie_input.video_file,
                 item.subtitle.start,
-                item.duration,
-                os.path.join(config.output_dir,
-                             movie_input.movie_id,
-                             item.clip_subtitle),
-                movie_input.sub_file,
+                item.subtitle.end,
+                os.path.join(config.output_dir, movie_input.movie_id, item.screenshot_plain),
+                os.path.join(config.output_dir, movie_input.movie_id, item.screenshot_subtitle),
+                os.path.join(config.output_dir, movie_input.movie_id, item.clip_subtitle),             
             )
 
             movie.snapshots.append(Snapshot(
