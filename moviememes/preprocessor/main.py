@@ -44,31 +44,6 @@ def main():
             ))
         
         for item in tqdm.tqdm(work_items, desc=movie_input.movie_id):
-            # extract_screenshot_plain(
-            #     movie_input.video_file,
-            #     item.middle_timestamp,
-            #     os.path.join(config.output_dir,
-            #                  movie_input.movie_id,
-            #                  item.screenshot_plain),
-            # )
-            # extract_screenshot_subtitled(
-            #     movie_input.video_file,
-            #     item.middle_timestamp,
-            #     os.path.join(config.output_dir,
-            #                  movie_input.movie_id,
-            #                  item.screenshot_subtitle),
-            #     movie_input.sub_file,
-            # )
-            # extract_clip_subtitled(
-            #     movie_input.video_file,
-            #     item.subtitle.start,
-            #     item.duration,
-            #     os.path.join(config.output_dir,
-            #                  movie_input.movie_id,
-            #                  item.clip_subtitle),
-            #     movie_input.sub_file,
-            # )
-
             extract_all(
                 movie_input.video_file,
                 movie_input.sub_file,
