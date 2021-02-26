@@ -40,6 +40,6 @@ RUN echo "Installing requirements:" && \
 COPY moviememes ./moviememes
 COPY lambda_entrypoint.py .
 
-ENV MEME_DB_URL ${MEME_DB_URL}
+ENV MOVIE_DB_URL ${MOVIE_DB_URL}
 
 CMD [ "lambda_entrypoint.main_handler" ] 

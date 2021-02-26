@@ -13,8 +13,10 @@ class Movie(_Base):
     id = Column(String, primary_key=True)
     title = Column(String)
 
-    snapshots = relationship('Snapshot', order_by='Snapshot.start_seconds', back_populates='movie')
-    attributions = relationship('Attribution', back_populates='movie', cascade='all, delete, delete-orphan')
+    snapshots = relationship(
+        'Snapshot', order_by='Snapshot.start_seconds', back_populates='movie')
+    attributions = relationship(
+        'Attribution', back_populates='movie', cascade='all, delete, delete-orphan')
 
 
 class Attribution(_Base):
@@ -44,18 +46,18 @@ class Snapshot(_Base):
     movie = relationship('Movie', back_populates='snapshots')
 
 
-def get_sessionmaker(path: str, echo: bool=False, initdb=True) -> Callable[[], Session]:
+def get_sessionmaker(path: str, echo: bool = False, initdb=True) -> Callable[[], Session]:
     print(path, echo, initdb)
     if path:
         engine = create_engine(f'sqlite:///{path}', echo=echo)
     else:
-        logging.warn('no engine path specified, using in-memory SQLite engine and forcing echo on')
+        logging.warning(
+            'no engine path specified, using in-memory SQLite engine and forcing echo on')
         engine = create_engine('sqlite:///:memory:', echo=True)
 
     if initdb:
         logging.info('ensuring database is initialized')
         _Base.metadata.create_all(engine)
 
-    sm = sessionmaker(bind=engine)
-    return sm
-
+    sm_func = sessionmaker(bind=engine)
+    return sm_func
