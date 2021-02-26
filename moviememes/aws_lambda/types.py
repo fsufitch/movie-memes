@@ -23,6 +23,7 @@ class _AWSAPIGatewayEvent_RequestContext(TypedDict): #pylint: disable=invalid-na
     rawPath: str
     time: str
     timeEpoch: float
+    http: _AWSAPIGatewayEvent_RequestContext_HTTP
 
 class AWSAPIGatewayEvent(TypedDict):
     """ https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-lambda.html """

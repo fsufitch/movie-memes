@@ -1,5 +1,6 @@
 import json
 import logging
+from moviememes.aws_lambda.api_utils import parse_path
 import os
 import tempfile
 import traceback
@@ -31,10 +32,9 @@ def init_function():
         event['hot_timer'] = hot_timer
         event['dbsession'] = db_sessionmaker()
         event['snapshot_paths'] = snapshot_paths
+        event['action'], event['path_extra'] = parse_path(event['rawPath'])
 
-        action = event['rawPath'].split('/')[0]
-
-        action_handler = ACTIONS.get(action, not_found_handler)
+        action_handler = ACTIONS.get(event['action'], not_found_handler)
 
         try:
             code, body_data = action_handler(event, context)
