@@ -37,6 +37,10 @@ class AWSAPIGatewayEvent(TypedDict):
     isBase64Encoded: bool
     stageVariables: Mapping[str, str]
 
+    # initialized dynamically
+    action: str
+    path_extra: str
+
 
 # See: https://docs.aws.amazon.com/lambda/latest/dg/python-context.html
 AWSLambdaContext = Any

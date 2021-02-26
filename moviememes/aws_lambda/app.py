@@ -14,7 +14,7 @@ from moviememes.util import SnapshotPaths, Timer
 
 ACTIONS: ActionRoutes = {
     'hello': hello_handler,
-    'get_snapshot': get_snapshot_handler,
+    'snapshot': get_snapshot_handler,
 }
 
 

@@ -7,13 +7,18 @@ def get_snapshot_handler(event: AWSAPIGatewayEvent, context: AWSLambdaContext) -
     snapshot_paths = event['snapshot_paths']
     dbsession = event['dbsession']
 
-    movie_id = event['queryStringParameters'].get('movie_id', '')
-    timestamp = event['queryStringParameters'].get('timestamp', '')
+    if len(event['path_extra']) != 2:
+        return 400, {'error': 'improper query; expected format is /snapshot/<movie>/<timestamp>'}
+    movie_id, timestamp = event['path_extra'][:2]
+
+    # movie_id = event['queryStringParameters'].get('movie_id', '')
+    # timestamp = event['queryStringParameters'].get('timestamp', '')
 
     query = dbsession.query(Snapshot).filter(
         (Snapshot.movie_id == movie_id)
         & (Snapshot.start_seconds <= timestamp)
         & (Snapshot.end_seconds > timestamp))
+
     query_count = query.count()
 
     for row in query.all():
