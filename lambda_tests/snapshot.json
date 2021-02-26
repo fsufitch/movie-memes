@@ -1,0 +1,16 @@
+{
+  "rawPath": "/snapshot/sw3-rots/228.5",
+  "rawQueryString": "",
+  "headers": {},
+  "queryStringParameters": {},
+  "requestContext": {
+    "rawPath": "/snapshot/sw3-rots/228.5",
+    "time": "",
+    "timeEpoch": 0,
+    "http": {}
+  },
+  "body": "",
+  "pathParameters": {},
+  "isBase64Encoded": false,
+  "stageVariables": {}
+}

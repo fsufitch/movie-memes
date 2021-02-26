@@ -1,0 +1,16 @@
+{
+  "rawPath": "/hello",
+  "rawQueryString": "",
+  "headers": {},
+  "queryStringParameters": {},
+  "requestContext": {
+    "rawPath": "/hello",
+    "time": "",
+    "timeEpoch": 0,
+    "http": {}
+  },
+  "body": "",
+  "pathParameters": {},
+  "isBase64Encoded": false,
+  "stageVariables": {}
+}
