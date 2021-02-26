@@ -64,3 +64,30 @@ their movie and the files they can be found in. The filename indicates whether t
 is subtitled or not, and what timestamps (in seconds) it occurs at.
 
 Integrating this into a webservice is TBD.
+
+## Lambda function
+
+Build the lambda function using:
+
+    docker build --target lambda -t mmlambda
+
+Run it locally to test, using:
+
+    docker run -p 9000:8080 mmlambda
+
+Query example using CURL/jq:
+
+    $ curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"action": "hello"}' | jq '.body_parsed = (.body | fromjson)'
+
+    {
+      "statusCode": 200,
+      "body": "{\"ok\": true, \"context\": {\"function_name\": \"test_function\", \"function_version\": \"$LATEST\", \"hot_time\": 447.566876}}",
+      "body_parsed": {
+        "ok": true,
+        "context": {
+          "function_name": "test_function",
+          "function_version": "$LATEST",
+          "hot_time": 447.566876
+        }
+      }
+    }
