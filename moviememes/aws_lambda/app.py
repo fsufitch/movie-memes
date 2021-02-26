@@ -7,7 +7,7 @@ import traceback
 import requests
 from moviememes.aws_lambda.hello import hello_handler
 from moviememes.aws_lambda.snapshots import get_snapshot_handler
-from moviememes.aws_lambda.types import ActionHandlerReturn, ActionRoutes
+from moviememes.aws_lambda.types import AWSAPIGatewayEvent, AWSLambdaContext, ActionHandlerReturn, ActionRoutes
 from moviememes.db import get_sessionmaker
 from moviememes.util import SnapshotPaths, Timer
 
@@ -17,8 +17,8 @@ ACTIONS: ActionRoutes = {
 }
 
 
-def not_found_handler(event, context) -> ActionHandlerReturn:  # pylint: disable=unused-argument
-    return 404, {}
+def not_found_handler(event: AWSAPIGatewayEvent, context: AWSLambdaContext) -> ActionHandlerReturn:  # pylint: disable=unused-argument
+    return 404, {'error': 'action not found'}
 
 
 def init_function():
@@ -26,13 +26,15 @@ def init_function():
     db_sessionmaker = bootstrap_db(os.environ.get('MOVIE_DB_URL'))
     snapshot_paths = SnapshotPaths(os.environ.get('MOVIE_DB_URL'))
 
-    def inner(event, context):
+    def inner(event: AWSAPIGatewayEvent, context: AWSLambdaContext):
+        print('got request', event)
         event['hot_timer'] = hot_timer
         event['dbsession'] = db_sessionmaker()
         event['snapshot_paths'] = snapshot_paths
 
-        action_handler = ACTIONS.get(
-            event.get('action', None), not_found_handler)
+        action = event['rawPath'].split('/')[0]
+
+        action_handler = ACTIONS.get(action, not_found_handler)
 
         try:
             code, body_data = action_handler(event, context)

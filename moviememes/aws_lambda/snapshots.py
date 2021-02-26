@@ -1,20 +1,16 @@
-from datetime import time
+from moviememes.aws_lambda.types import (ActionHandlerReturn,
+                                         AWSAPIGatewayEvent, AWSLambdaContext)
 from moviememes.db import Snapshot
-from moviememes.aws_lambda.types import AWSLambdaContext, ActionHandlerReturn, InputEvent
 
 
-class GetSnapshotEvent(InputEvent):
-    movie_id: str
-    timestamp: float
-
-
-def get_snapshot_handler(event: GetSnapshotEvent, context: AWSLambdaContext) -> ActionHandlerReturn:  # pylint: disable=unused-argument
-    movie_id = event['movie_id']
-    timestamp = event['timestamp']
+def get_snapshot_handler(event: AWSAPIGatewayEvent, context: AWSLambdaContext) -> ActionHandlerReturn:  # pylint: disable=unused-argument
     snapshot_paths = event['snapshot_paths']
-    db = event['dbsession']
+    dbsession = event['dbsession']
 
-    query = db.query(Snapshot).filter(
+    movie_id = event['queryStringParameters'].get('movie_id', '')
+    timestamp = event['queryStringParameters'].get('timestamp', '')
+
+    query = dbsession.query(Snapshot).filter(
         (Snapshot.movie_id == movie_id)
         & (Snapshot.start_seconds <= timestamp)
         & (Snapshot.end_seconds > timestamp))
