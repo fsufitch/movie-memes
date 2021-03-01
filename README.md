@@ -69,7 +69,7 @@ Integrating this into a webservice is TBD.
 
 Build the lambda function using:
 
-    docker build --target lambda -t mmlambda
+    docker build --target lambda -t mmlambda .
 
 Run it locally to test, using:
 

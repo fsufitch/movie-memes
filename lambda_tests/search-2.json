@@ -1,0 +1,17 @@
+{
+    "rawPath": "/search",
+    "rawQueryString": "q=milady&movie=sw1-tpm&movie=sw3-rots",
+    "headers": {},
+    "queryStringParameters": {},
+    "requestContext": {
+      "rawPath": "/search",
+      "time": "",
+      "timeEpoch": 0,
+      "http": {}
+    },
+    "body": "",
+    "pathParameters": {},
+    "isBase64Encoded": false,
+    "stageVariables": {}
+  }
+  

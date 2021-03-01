@@ -1,12 +1,13 @@
 import json
 import logging
-from moviememes.aws_lambda.api_utils import parse_path
 import os
 import tempfile
 import traceback
 
 import requests
+from moviememes.aws_lambda.api_utils import parse_path
 from moviememes.aws_lambda.hello import hello_handler
+from moviememes.aws_lambda.search import search_handler
 from moviememes.aws_lambda.snapshots import get_snapshot_handler
 from moviememes.aws_lambda.types import AWSAPIGatewayEvent, AWSLambdaContext, ActionHandlerReturn, ActionRoutes
 from moviememes.db import get_sessionmaker
@@ -15,6 +16,7 @@ from moviememes.util import SnapshotPaths, Timer
 ACTIONS: ActionRoutes = {
     'hello': hello_handler,
     'snapshot': get_snapshot_handler,
+    'search': search_handler,
 }
 
 
@@ -67,7 +69,7 @@ def bootstrap_db(url: str):
             byts: bytes
             dbfile.write(byts)
 
-    return get_sessionmaker(dbpath)
+    return get_sessionmaker(dbpath, echo=True)
 
 
 main_handler = init_function()
